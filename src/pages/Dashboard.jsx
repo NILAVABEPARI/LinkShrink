@@ -45,7 +45,7 @@ const Dashboard = () => {
                         <CardTitle>Links Created</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p>{urls?.length}</p>
+                        <p>{urls?.length || 0}</p>
                     </CardContent>
                 </Card>
                 <Card>
@@ -53,7 +53,7 @@ const Dashboard = () => {
                         <CardTitle>Total Clicks</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p>{clicks?.length}</p>
+                        <p>{clicks?.length || 0}</p>
                     </CardContent>
                 </Card>
             </div>
