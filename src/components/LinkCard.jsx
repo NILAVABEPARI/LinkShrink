@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Copy, Download, LinkIcon, Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";

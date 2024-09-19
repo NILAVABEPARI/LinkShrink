@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 export default function Location({ stats = [] }) {
