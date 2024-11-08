@@ -11,14 +11,14 @@ import Error from "@/components/Error";
 import useFetch from "@/hooks/use-fetch";
 
 import { getUrls } from "@/db/apiUrls";
-import { getClicksForUrls } from "@/db/apiClicks";
+import { getTotalClicksForUrls } from "@/db/apiClicks";
 import { UrlState } from "@/Context";
 
 const Dashboard = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const { user } = UrlState();
-    const { loading, error, data: urls, fn: fnUrls } = useFetch(getUrls, user.id);
-    const { loading: loadingClicks, data: clicks, fn: fnClicks } = useFetch(getClicksForUrls, urls?.map((url) => url.id));
+    const { loading, error, data: urls, fn: fnUrls } = useFetch(getUrls, user?.id);
+    const { loading: loadingClicks, data: clicks, fn: fnClicks } = useFetch(getTotalClicksForUrls, urls?.map((url) => url.id));
 
     useEffect(() => {
         fnUrls();

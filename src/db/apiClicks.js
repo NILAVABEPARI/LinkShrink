@@ -1,25 +1,32 @@
 import { UAParser } from "ua-parser-js";
 import supabase from "./supabase";
 
-export async function getClicksForUrls(urlIds) {
-    const { data, error } = await supabase.from("urls").select("*").in("url_id", urlIds);
-    if (!session.session) { return null; }
-    if (error) {
-        console.log(error.message);
-        throw new Error('unable to load Clicks');
+export async function getTotalClicksForUrls(urlIds) {
+    try {
+        const { data, error } = await supabase.from("clicks").select("*").in("url_id", urlIds);
+        if (error) {
+            console.error("Error fetching total clicks -- ", error);
+            throw new Error('Unable to load Clicks -- ', error.message);
+        }
+        return data;
+    } catch (error) {
+        console.error("Error in getTotalClicksForUrls -- ", error);
+        throw error;
     }
-    return data;
 }
 
 export async function getClicksForUrl(url_id) {
-    const { data, error } = await supabase.from("clicks").select("*").eq("url_id", url_id);
-
-    if (error) {
-        console.error(error);
-        throw new Error("Unable to load Stats");
+    try {
+        const { data, error } = await supabase.from("clicks").select("*").eq("url_id", url_id);
+        if (error) {
+            console.error("Error fetching clicks for particular url -- ", error);
+            throw new Error("Unable to load Stats");
+        }
+        return data;
+    } catch (error) {
+        console.error("Error in getClicksForUrl -- ", error);
+        throw error;
     }
-
-    return data;
 }
 
 const parser = new UAParser();
