@@ -19,8 +19,9 @@ const Header = () => {
     return (
         <>
             <nav className='py-4 flex justify-between items-center'>
-                <Link to="/">
-                    <img src="/logo.png" alt="Url Shortener logo" className='h-16' />
+                <Link to="/" className='flex'>
+                    <img src="/logo.png" alt="A modern, minimalistic logo design for a URL shortener website" className='h-16 pr-3' />
+                    <h1 className='text-4xl'>LinkShrink</h1>
                 </Link>
 
                 <div>

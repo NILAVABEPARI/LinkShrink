@@ -67,11 +67,11 @@ const LinkPage = () => {
                         {url?.title}
                     </span>
                     <a
-                        href={`https://main--nb-urlshortener.netlify.app/${link}`}
+                        href={`https://linkshrink.netlify.app/${link}`}
                         target="_blank"
                         className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
                     >
-                        https://main--nb-urlshortener.netlify.app/{link}
+                        https://linkshrink.netlify.app/{link}
                     </a>
                     <a href={url?.original_url} target="_blank" className="flex items-center gap-1 hover:underline cursor-pointer">
                         <LinkIcon className="p-1" />
@@ -81,7 +81,7 @@ const LinkPage = () => {
                         {new Date(url?.created_at).toLocaleString()}
                     </span>
                     <div className="flex gap-2">
-                        <Button variant="ghost" onClick={() => navigator.clipboard.writeText(`https://urlShortener.in/${link}`)} >
+                        <Button variant="ghost" onClick={() => navigator.clipboard.writeText(`https://linkshrink.netlify.app/${link}`)} >
                             <Copy />
                         </Button>
                         <Button variant="ghost" onClick={downloadImage}>
