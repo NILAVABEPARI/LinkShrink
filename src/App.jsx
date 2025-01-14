@@ -1,4 +1,3 @@
-// !!!! supabase password -- mITbXYeMLdQqkQv7
 import './App.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from './layouts/AppLayout';

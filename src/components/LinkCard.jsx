@@ -1,29 +1,55 @@
-import { Copy, Download, LinkIcon, Trash } from "lucide-react";
+import { Copy, Download, LinkIcon, Trash, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import useFetch from "@/hooks/use-fetch";
 import { deleteUrl } from "@/db/apiUrls";
 import { BeatLoader } from "react-spinners";
+import { useState } from "react";
 
 const LinkCard = ({ url = [], fetchUrls }) => {
-    const downloadImage = () => {
-        const imageUrl = url?.qr;
-        const fileName = url?.title; // Desired file name for the downloaded image
+    const [copyClicked, setCopyClicked] = useState(false);
 
-        // Create an anchor element
-        const anchor = document.createElement("a");
-        anchor.href = imageUrl;
-        anchor.download = fileName;
+    const downloadImage = async () => {
+        try {
+            const imageUrl = url?.qr;       // Image URL to download
+            const fileName = url?.title;    // Desired file name for the downloaded image
 
-        // Append the anchor to the body
-        document.body.appendChild(anchor);
+            // Fetch the image and convert it to a blob
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            console.log('blob -> ', blob);
 
-        // Trigger the download by simulating a click event
-        anchor.click();
+            // Create a blob URL for the image
+            const blobUrl = URL.createObjectURL(blob);
+            console.log('blobUrl -> ', blobUrl);
 
-        // Remove the anchor from the document
-        document.body.removeChild(anchor);
+            // Create an anchor element
+            const anchor = document.createElement("a");
+            anchor.href = blobUrl;
+            anchor.download = fileName || "download";  // Fallback name if fileName is not defined
+
+            // Append the anchor to the body
+            document.body.appendChild(anchor);
+
+            // Trigger the download by simulating a click event
+            anchor.click();
+
+            // Clean up by removing the anchor and revoking the blob URL
+            document.body.removeChild(anchor);
+            URL.revokeObjectURL(blobUrl);
+        } catch (error) {
+            console.error("Failed to download image:", error);
+        }
     };
+
+    const copyLink = () => {
+        navigator.clipboard.writeText(`https://linkshrink.netlify.app/${url?.short_url}`)
+        setCopyClicked(true);
+
+        setTimeout(() => {
+            setCopyClicked(false);
+        }, 3000); // reset the copy icon after 3 seconds
+    }
 
     const { loading: loadingDelete, fn: fnDelete } = useFetch(deleteUrl, url.id);
 
@@ -52,11 +78,9 @@ const LinkCard = ({ url = [], fetchUrls }) => {
             <div className="flex gap-2">
                 <Button
                     variant="ghost"
-                    onClick={() =>
-                        navigator.clipboard.writeText(`https://linkshrink.netlify.app/${url?.short_url}`)
-                    }
+                    onClick={copyLink}
                 >
-                    <Copy />
+                    {copyClicked ? <Check /> : <Copy />}
                 </Button>
                 <Button variant="ghost" onClick={downloadImage}>
                     <Download />

@@ -62,7 +62,7 @@ const Dashboard = () => {
             <div className="relative">
                 <Input
                     type="text"
-                    placeholder="Filter Links..."
+                    placeholder="Filter Links by Title..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
